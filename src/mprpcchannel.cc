@@ -8,7 +8,7 @@
 #include <unistd.h>
 #include <errno.h>
 #include "mprpcapplication.h"
-#include "mprpccontroller.h"
+// #include "mprpccontroller.h"
 // #include "zookeeperutil.h"
 
 /*
@@ -90,7 +90,7 @@ void MprpcChannel::CallMethod(const google::protobuf::MethodDescriptor* method,
     if (-1 == clientfd)
     {
         char errtxt[512] = {0};
-        std::cout <<"create socket error! "<< erron <<std::endl;
+        std::cout <<"create socket error! "<< errno <<std::endl;
         exit(EXIT_FAILURE);
     }
 
@@ -109,7 +109,7 @@ void MprpcChannel::CallMethod(const google::protobuf::MethodDescriptor* method,
     if (-1 == connect(clientfd, (struct sockaddr*)&server_addr, sizeof(server_addr)))
     {
         close(clientfd);
-        std::cout <<"connect error! errno: "<<erron<<std::endl;
+        std::cout <<"connect error! errno: "<<errno<<std::endl;
         return;
     }
 
@@ -117,7 +117,7 @@ void MprpcChannel::CallMethod(const google::protobuf::MethodDescriptor* method,
     if (-1 == send(clientfd, send_rpc_str.c_str(), send_rpc_str.size(), 0))
     {
         close(clientfd);
-        std::cout <<"send error! errno: "<<erron<<std::endl;
+        std::cout <<"send error! errno: "<<errno<<std::endl;
         return;
     }
 
@@ -127,7 +127,7 @@ void MprpcChannel::CallMethod(const google::protobuf::MethodDescriptor* method,
     if (-1 == (recv_size = recv(clientfd, recv_buf, 1024, 0)))
     {
         close(clientfd);
-        std::cout <<"recv error! errno: "<<erron<<std::endl;
+        std::cout <<"recv error! errno: "<<errno<<std::endl;
         return;
     }
 
