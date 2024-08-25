@@ -1,11 +1,10 @@
 #pragma once
 #include "google/protobuf/service.h"
-#include <memory>
 #include <muduo/net/TcpServer.h>
 #include <muduo/net/EventLoop.h>
 #include <muduo/net/InetAddress.h>
-
-
+#include <unordered_map>
+#include "google/protobuf/descriptor.h"
 class RpcProvider
 {
 public:
@@ -17,6 +16,14 @@ public:
 private:
     muduo::net::EventLoop m_eventLoop;
 
+    // service服务类型信息
+    struct ServiceInfo
+    {
+        google::protobuf::Service *m_service; // 保存服务对象
+        std::unordered_map<std::string, const google::protobuf::MethodDescriptor*> m_methodMap; // 保存服务方法描述符
+    };
+    // 存储注册成功的服务对象和其服务方法的所有信息
+    std::unordered_map<std::string, ServiceInfo> m_serviceMap;
 
     // 新的socket连接回调
     // 一旦有连接进来，立刻给连接回调处理

@@ -2,10 +2,52 @@
 #include <string>
 #include "mprpcapplication.h"
 
+
+/*
+简单来说，服务提供方需要知道：
+    1：自己提供了哪些服务（服务名称）。
+    2：每个服务包含哪些方法（方法名称和数量）。
+    3：每个方法的详细描述（包括方法的参数、返回值等信息）
+*/
+
+/*
+service_name =>  service描述   
+                        =》 service* 记录服务对象
+                        method_name  =>  method方法对象
+
+常见的序列化方式：json   protobuf
+*/
+
 // 这里是框架提供给外部使用的，可以发布rpc方法的函数接口
 void RpcProvider::NotifyService(google::protobuf::Service *service)
 {
+    // 获取服务的描述
+    ServiceInfo service_info;
+    // 获取服务对象的描述信息
+    // 提供了服务的元数据信息，比如服务名称、方法数量等。
+    // auto 变量为 google::protobuf::ServiceDescriptor
+    const google::protobuf::ServiceDescriptor *pserviceDesc = service->GetDescriptor();
+    // 获取服务的名称
+    std::string service_name = pserviceDesc->name();
+    // 获取该服务的数量
+    int methodCnt = pserviceDesc->method_count();
 
+    std::cout << "service_name:" << service_name << std::endl;
+    
+    for (int i = 0; i < methodCnt; i++)
+    {
+        // 获取了服务对象指定下标的服务方法描述（抽象描述）
+        // 获取索引为 i 的方法的描述符（MethodDescriptor）。
+        const google::protobuf::MethodDescriptor *pmethodDesc = pserviceDesc->method(i);
+        // 获取方法的名称
+        std::string method_name = pmethodDesc->name();
+        // 将方法名称与方法描述符映射在一起
+        service_info.m_methodMap.insert({method_name,pmethodDesc});
+    }
+    // 将服务名称与ServiceInfo映射在一起
+    service_info.m_service = service;
+    m_serviceMap.insert({service_name,service_info});
+    
 }
 
 // 启动rpc服务节点，开始提供rpc远程网络调用服务
