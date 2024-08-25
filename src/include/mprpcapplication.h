@@ -8,6 +8,7 @@ class MprpcApplication
 public:
     static void Init(int argc,char ** argv);
     static MprpcApplication &GetInstance(); // 获取唯一的单例
+    static MprpcConfig &GetConfig(); //获取唯一实例
 private:
     static MprpcConfig m_config; 
     MprpcApplication(){}

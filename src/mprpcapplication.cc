@@ -61,3 +61,8 @@ MprpcApplication & MprpcApplication::GetInstance() // 获取唯一的单例
     static MprpcApplication app;
     return app;
 }
+
+MprpcConfig& MprpcApplication::GetConfig()
+{
+    return m_config;
+}
