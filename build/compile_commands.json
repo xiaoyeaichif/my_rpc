@@ -11,6 +11,11 @@
 },
 {
   "directory": "/home/yejie/github/my_rpc/build/src",
+  "command": "/usr/bin/g++  -I/home/yejie/github/my_rpc/src/include -I/home/yejie/github/my_rpc/example -g -o CMakeFiles/mprpc.dir/rpcheader.pb.cc.o -c /home/yejie/github/my_rpc/src/rpcheader.pb.cc",
+  "file": "/home/yejie/github/my_rpc/src/rpcheader.pb.cc"
+},
+{
+  "directory": "/home/yejie/github/my_rpc/build/src",
   "command": "/usr/bin/g++  -I/home/yejie/github/my_rpc/src/include -I/home/yejie/github/my_rpc/example -g -o CMakeFiles/mprpc.dir/rpcprovider.cc.o -c /home/yejie/github/my_rpc/src/rpcprovider.cc",
   "file": "/home/yejie/github/my_rpc/src/rpcprovider.cc"
 },
