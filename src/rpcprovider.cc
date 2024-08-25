@@ -27,6 +27,7 @@ void RpcProvider::Run()
     // 设置连接与信息处理回调方法
     // 用muduo库的好处是分离了网络代码和业务代码
     server.setConnectionCallback(bind(&RpcProvider::OnConnection,this,std::placeholders:: _1));
+    // 读写回调
     server.setMessageCallback(bind(&RpcProvider::OnMessage,this,
     std::placeholders::_1,std::placeholders::_2,std::placeholders::_3));
 

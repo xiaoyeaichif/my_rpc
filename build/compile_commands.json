@@ -1,0 +1,27 @@
+[
+{
+  "directory": "/home/yejie/github/my_rpc/build/src",
+  "command": "/usr/bin/g++  -I/home/yejie/github/my_rpc/src/include -I/home/yejie/github/my_rpc/example -g -o CMakeFiles/mprpc.dir/mprpcapplication.cc.o -c /home/yejie/github/my_rpc/src/mprpcapplication.cc",
+  "file": "/home/yejie/github/my_rpc/src/mprpcapplication.cc"
+},
+{
+  "directory": "/home/yejie/github/my_rpc/build/src",
+  "command": "/usr/bin/g++  -I/home/yejie/github/my_rpc/src/include -I/home/yejie/github/my_rpc/example -g -o CMakeFiles/mprpc.dir/mprpcconfig.cc.o -c /home/yejie/github/my_rpc/src/mprpcconfig.cc",
+  "file": "/home/yejie/github/my_rpc/src/mprpcconfig.cc"
+},
+{
+  "directory": "/home/yejie/github/my_rpc/build/src",
+  "command": "/usr/bin/g++  -I/home/yejie/github/my_rpc/src/include -I/home/yejie/github/my_rpc/example -g -o CMakeFiles/mprpc.dir/rpcprovider.cc.o -c /home/yejie/github/my_rpc/src/rpcprovider.cc",
+  "file": "/home/yejie/github/my_rpc/src/rpcprovider.cc"
+},
+{
+  "directory": "/home/yejie/github/my_rpc/build/example/callee",
+  "command": "/usr/bin/g++  -I/home/yejie/github/my_rpc/src/include -I/home/yejie/github/my_rpc/example -g -o CMakeFiles/provider.dir/userservice.cc.o -c /home/yejie/github/my_rpc/example/callee/userservice.cc",
+  "file": "/home/yejie/github/my_rpc/example/callee/userservice.cc"
+},
+{
+  "directory": "/home/yejie/github/my_rpc/build/example/callee",
+  "command": "/usr/bin/g++  -I/home/yejie/github/my_rpc/src/include -I/home/yejie/github/my_rpc/example -g -o CMakeFiles/provider.dir/__/user.pb.cc.o -c /home/yejie/github/my_rpc/example/user.pb.cc",
+  "file": "/home/yejie/github/my_rpc/example/user.pb.cc"
+}
+]
