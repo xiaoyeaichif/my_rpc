@@ -1,4 +1,4 @@
-set(SRC_LIST callservice.cc ../user.pb.cc)
+set(SRC_LIST calluserservice.cc ../user.pb.cc)
 
 add_executable(consumer ${SRC_LIST}) # 服务提供者
 
