@@ -1,4 +1,5 @@
 #pragma once
+#include "mprpcconfig.h"
 
 // 单例模式
 // mprpc的框架类,负责初始化任务
@@ -8,6 +9,7 @@ public:
     static void Init(int argc,char ** argv);
     static MprpcApplication &GetInstance(); // 获取唯一的单例
 private:
+    static MprpcConfig m_config; 
     MprpcApplication(){}
     // 禁止拷贝构造函数
     MprpcApplication(const MprpcApplication &) = delete;
