@@ -20,6 +20,11 @@
   "file": "/home/yejie/github/my_rpc/src/rpcprovider.cc"
 },
 {
+  "directory": "/home/yejie/github/my_rpc/build/src",
+  "command": "/usr/bin/g++  -I/home/yejie/github/my_rpc/src/include -I/home/yejie/github/my_rpc/example -g -o CMakeFiles/mprpc.dir/mprpcchannel.cc.o -c /home/yejie/github/my_rpc/src/mprpcchannel.cc",
+  "file": "/home/yejie/github/my_rpc/src/mprpcchannel.cc"
+},
+{
   "directory": "/home/yejie/github/my_rpc/build/example/callee",
   "command": "/usr/bin/g++  -I/home/yejie/github/my_rpc/src/include -I/home/yejie/github/my_rpc/example -g -o CMakeFiles/provider.dir/userservice.cc.o -c /home/yejie/github/my_rpc/example/callee/userservice.cc",
   "file": "/home/yejie/github/my_rpc/example/callee/userservice.cc"
@@ -27,6 +32,16 @@
 {
   "directory": "/home/yejie/github/my_rpc/build/example/callee",
   "command": "/usr/bin/g++  -I/home/yejie/github/my_rpc/src/include -I/home/yejie/github/my_rpc/example -g -o CMakeFiles/provider.dir/__/user.pb.cc.o -c /home/yejie/github/my_rpc/example/user.pb.cc",
+  "file": "/home/yejie/github/my_rpc/example/user.pb.cc"
+},
+{
+  "directory": "/home/yejie/github/my_rpc/build/example/caller",
+  "command": "/usr/bin/g++  -I/home/yejie/github/my_rpc/src/include -I/home/yejie/github/my_rpc/example -g -o CMakeFiles/consumer.dir/calluserservice.cc.o -c /home/yejie/github/my_rpc/example/caller/calluserservice.cc",
+  "file": "/home/yejie/github/my_rpc/example/caller/calluserservice.cc"
+},
+{
+  "directory": "/home/yejie/github/my_rpc/build/example/caller",
+  "command": "/usr/bin/g++  -I/home/yejie/github/my_rpc/src/include -I/home/yejie/github/my_rpc/example -g -o CMakeFiles/consumer.dir/__/user.pb.cc.o -c /home/yejie/github/my_rpc/example/user.pb.cc",
   "file": "/home/yejie/github/my_rpc/example/user.pb.cc"
 }
 ]
