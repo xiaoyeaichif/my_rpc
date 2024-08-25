@@ -92,13 +92,19 @@ void RpcProvider::Run()
 
 // 新的socket连接回调
 // 一旦有连接进来，立刻给连接回调处理
-void RpcProvider::OnConnection(const muduo::net::TcpConnectionPtr&)
+// 短连接请求
+void RpcProvider::OnConnection(const muduo::net::TcpConnectionPtr&conn)
 {
-
+    if (!conn->connected())
+    {
+        // 和rpc client的连接断开了
+        conn->shutdown();
+    }
 }
 // 已建立连接用户的读写事件回调
 // 一旦有读写事件，立刻给读写事件回调处理
-void RpcProvider::OnMessage(const muduo::net::TcpConnectionPtr&, muduo::net::Buffer*, muduo::Timestamp)
+void RpcProvider::OnMessage(const muduo::net::TcpConnectionPtr&conn, 
+                            muduo::net::Buffer*buffer, muduo::Timestamp)
 {
 
 }
