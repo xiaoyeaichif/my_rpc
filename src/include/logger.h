@@ -30,11 +30,11 @@
 // 框架的日志系统
 
 // 日志级别
-enum Loglevel
+enum LogLevel
 {
-    INFO; // 普通信息
-    ERROR; // 错误信息
-}
+    INFO,// 普通信息
+    ERROR, // 错误信息
+};
 
 
 
