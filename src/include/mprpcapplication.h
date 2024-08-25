@@ -1,5 +1,7 @@
 #pragma once
 
+// 单例模式
+// mprpc的框架类,负责初始化任务
 class MprpcApplication
 {
 public:
