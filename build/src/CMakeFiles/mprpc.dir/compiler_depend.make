@@ -780,9 +780,32 @@ src/CMakeFiles/mprpc.dir/rpcprovider.cc.o: ../src/rpcprovider.cc \
   /usr/include/muduo/base/Mutex.h \
   /usr/include/muduo/base/CurrentThread.h \
   /usr/include/muduo/net/TimerId.h \
+  /usr/local/include/google/protobuf/descriptor.h \
+  /usr/local/include/google/protobuf/stubs/mutex.h \
+  /usr/include/c++/11/mutex \
+  /usr/include/c++/11/chrono \
+  /usr/include/c++/11/ratio \
+  /usr/include/c++/11/limits \
+  /usr/include/c++/11/ctime \
+  /usr/include/c++/11/bits/parse_numbers.h \
+  /usr/include/c++/11/bits/std_mutex.h \
+  /usr/include/c++/11/bits/unique_lock.h \
+  /usr/local/include/google/protobuf/stubs/once.h \
   ../src/include/mprpcapplication.h \
   ../src/include/mprpcconfig.h
 
+
+/usr/include/c++/11/bits/std_mutex.h:
+
+/usr/include/c++/11/bits/parse_numbers.h:
+
+/usr/include/c++/11/ctime:
+
+/usr/include/c++/11/limits:
+
+/usr/include/c++/11/mutex:
+
+/usr/local/include/google/protobuf/descriptor.h:
 
 /usr/include/muduo/base/CurrentThread.h:
 
@@ -875,6 +898,8 @@ src/CMakeFiles/mprpc.dir/rpcprovider.cc.o: ../src/rpcprovider.cc \
 /usr/include/muduo/base/Types.h:
 
 /usr/include/muduo/base/Atomic.h:
+
+/usr/include/c++/11/ratio:
 
 /usr/include/muduo/net/TcpServer.h:
 
@@ -996,6 +1021,8 @@ src/CMakeFiles/mprpc.dir/rpcprovider.cc.o: ../src/rpcprovider.cc \
 
 /usr/include/c++/11/unordered_map:
 
+/usr/local/include/google/protobuf/stubs/once.h:
+
 /usr/include/x86_64-linux-gnu/bits/stdint-intn.h:
 
 /usr/include/x86_64-linux-gnu/bits/types.h:
@@ -1114,6 +1141,8 @@ src/CMakeFiles/mprpc.dir/rpcprovider.cc.o: ../src/rpcprovider.cc \
 
 /usr/local/include/google/protobuf/stubs/common.h:
 
+/usr/include/c++/11/bits/unique_lock.h:
+
 /usr/include/c++/11/bits/uses_allocator.h:
 
 /usr/include/errno.h:
@@ -1151,6 +1180,8 @@ src/CMakeFiles/mprpc.dir/rpcprovider.cc.o: ../src/rpcprovider.cc \
 /usr/include/c++/11/bits/memoryfwd.h:
 
 /usr/include/c++/11/bits/stl_function.h:
+
+/usr/include/c++/11/chrono:
 
 /usr/include/x86_64-linux-gnu/bits/wordsize.h:
 
@@ -1199,6 +1230,8 @@ src/CMakeFiles/mprpc.dir/rpcprovider.cc.o: ../src/rpcprovider.cc \
 /usr/include/c++/11/bits/stl_construct.h:
 
 ../src/include/mprpcapplication.h:
+
+/usr/local/include/google/protobuf/stubs/mutex.h:
 
 /usr/local/include/boost/type_traits/is_reference.hpp:
 
