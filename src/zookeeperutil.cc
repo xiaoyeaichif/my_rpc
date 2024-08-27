@@ -4,6 +4,7 @@
 #include <iostream>
 
 // 全局的watcher观察器   zkserver给zkclient的通知
+// 使用信号量同步连接操作，确保客户端在与服务器建立连接后再进行其他操作。
 void global_watcher(zhandle_t *zh, int type,
                    int state, const char *path, void *watcherCtx)
 {
