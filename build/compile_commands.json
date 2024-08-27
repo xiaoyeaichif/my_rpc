@@ -30,6 +30,16 @@
   "file": "/home/yejie/github/my_rpc/src/logger.cc"
 },
 {
+  "directory": "/home/yejie/github/my_rpc/build/src",
+  "command": "/usr/bin/g++  -I/home/yejie/github/my_rpc/src/include -I/home/yejie/github/my_rpc/example -g -o CMakeFiles/mprpc.dir/mprpccontroller.cc.o -c /home/yejie/github/my_rpc/src/mprpccontroller.cc",
+  "file": "/home/yejie/github/my_rpc/src/mprpccontroller.cc"
+},
+{
+  "directory": "/home/yejie/github/my_rpc/build/src",
+  "command": "/usr/bin/g++  -I/home/yejie/github/my_rpc/src/include -I/home/yejie/github/my_rpc/example -g -o CMakeFiles/mprpc.dir/zookeeperutil.cc.o -c /home/yejie/github/my_rpc/src/zookeeperutil.cc",
+  "file": "/home/yejie/github/my_rpc/src/zookeeperutil.cc"
+},
+{
   "directory": "/home/yejie/github/my_rpc/build/example/callee",
   "command": "/usr/bin/g++  -I/home/yejie/github/my_rpc/src/include -I/home/yejie/github/my_rpc/example -g -o CMakeFiles/provider.dir/userservice.cc.o -c /home/yejie/github/my_rpc/example/callee/userservice.cc",
   "file": "/home/yejie/github/my_rpc/example/callee/userservice.cc"
