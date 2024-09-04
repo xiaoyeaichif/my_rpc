@@ -9,6 +9,11 @@ int main(int argc, char **argv)
     MprpcApplication::Init(argc, argv);
 
     // 演示调用远程发布的rpc方法Login
+    /*
+        stub的作用
+            1：屏蔽网络细节，使得客户端的调用变得简单
+            2：stub类帮助我们实现序列化与反序列化
+    */
     fixbug::UserServiceRpc_Stub stub(new MprpcChannel());
     // rpc方法的请求参数
     fixbug::LoginRequest request;
