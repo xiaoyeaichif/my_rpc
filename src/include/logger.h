@@ -42,7 +42,7 @@ enum LogLevel
 class Logger
 {
 public:
-    // 获取日志的单例
+    // 获取日志的单例,返回静态版本，线程安全
     static Logger& GetInstance();
     // 设置日志级别 
     void SetLogLevel(LogLevel level);
