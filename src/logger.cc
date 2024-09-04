@@ -3,7 +3,7 @@
 #include <iostream>
 
 
- // 获取日志的单例
+ // 获取日志的单例，线程安全的懒汉式模式
 Logger& Logger::GetInstance()
 {
     static Logger logger;
