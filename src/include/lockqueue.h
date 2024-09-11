@@ -31,6 +31,7 @@ public:
 
         // 将元素弹出时，必须先获取锁
         std::unique_lock<std::mutex>_lock(m_mutex);
+        // 这里的操作用while是防止虚假唤醒
         while(m_queue.empty())
         {
             // 队列为空
