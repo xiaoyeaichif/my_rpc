@@ -56,6 +56,7 @@ void MprpcApplication::Init(int argc,char ** argv)
     std::cout << "zookeeperport:" << m_config.Load("zookeeperport") << std::endl;
 }
 
+// 线程安全的懒汉式模式
 MprpcApplication & MprpcApplication::GetInstance() // 获取唯一的单例
 {
     static MprpcApplication app;

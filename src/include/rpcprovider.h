@@ -12,6 +12,7 @@ public:
     void NotifyService(google::protobuf::Service *service);
 
     // 启动rpc服务节点，开始提供rpc远程网络调用服务
+    // 重写run方法
     void Run();
 private:
     muduo::net::EventLoop m_eventLoop;

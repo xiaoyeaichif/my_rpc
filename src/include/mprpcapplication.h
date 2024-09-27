@@ -7,6 +7,7 @@ class MprpcApplication
 {
 public:
     static void Init(int argc,char ** argv);
+     // 线程安全的懒汉模式
     static MprpcApplication &GetInstance(); // 获取唯一的对象单例
     static MprpcConfig &GetConfig(); //获取唯一信息实例
 private:
