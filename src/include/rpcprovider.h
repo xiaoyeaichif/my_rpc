@@ -15,6 +15,7 @@ public:
     // 重写run方法
     void Run();
 private:
+    // 事件循环------》也就是Reactor的主线程
     muduo::net::EventLoop m_eventLoop;
 
     // service服务类型信息
