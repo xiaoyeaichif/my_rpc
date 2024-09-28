@@ -5,6 +5,16 @@
 #include <iostream>
 
 /*
+    主要流程概述：
+        1：从客户端接收到 RPC 请求数据。
+        2：解析数据（包括消息头、服务名、方法名、参数等）。
+        3：查找相应的服务和方法。
+        4：调用该方法，传入解析后的参数。
+        5：将方法的返回结果通过网络发送回客户端。
+*/
+
+
+/*
 简单来说，服务提供方需要知道：
     1：自己提供了哪些服务（服务名称）。
     2：每个服务包含哪些方法（方法名称和数量）。
@@ -36,7 +46,7 @@ void RpcProvider::NotifyService(google::protobuf::Service *service)
     // 获取服务名
     std::cout << "service_name:" << service_name << std::endl;
     
-    
+    // 每个服务名下的方法个数，输出方法的名称
     for (int i = 0; i < methodCnt; i++)
     {
         // 获取了服务对象指定下标的服务方法描述（抽象描述）
@@ -105,9 +115,12 @@ void RpcProvider::OnConnection(const muduo::net::TcpConnectionPtr&conn)
 
 /*
 在框架内部，RpcProvider和RpcConsumer协商好之间通信用的protobuf数据类型
-service_name method_name args    定义proto的message类型，进行数据头的序列化和反序列化
+service_name  method_name args    定义proto的message类型，进行数据头的序列化和反序列化
                                  service_name method_name args_size
+                                 args代表方法参数长度
 16UserServiceLoginzhang san123456   
+
+
 
 header_size(4个字节) + header_str + args_str
 10 "10"
@@ -150,8 +163,11 @@ void RpcProvider::OnMessage(const muduo::net::TcpConnectionPtr&conn,
     // 网络中的数据为二进制数据------》然后反序列化为对象
     if(rpcHeader.ParseFromString(rpc_header_str))
     {
+        // 服务名的大小
         service_name = rpcHeader.service_name();
+        // 方法名的大小
         method_name = rpcHeader.method_name();
+        // 这部分代表的是参数的大小
         args_size = rpcHeader.args_size();
     }
     else{
@@ -205,6 +221,8 @@ void RpcProvider::OnMessage(const muduo::net::TcpConnectionPtr&conn,
     }
 
     // 响应----》这个数据是要回复客户端的请求的
+    // 也就是说rpc服务端要给客户端回复一个响应,这个响应还需通过序列化
+    // 通过网络（muduo库）进行发送
     google::protobuf::Message* response = service->GetResponsePrototype(method).New();
 
     // 回调函数的使用---->将respone对象序列化传递到网络中
