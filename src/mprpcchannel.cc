@@ -8,7 +8,7 @@
 #include <unistd.h>
 #include <errno.h>
 #include "mprpcapplication.h"
-// #include "mprpccontroller.h"
+#include "mprpccontroller.h"
 // #include "zookeeperutil.h"
 
 /*
@@ -39,8 +39,8 @@ void MprpcChannel::CallMethod(const google::protobuf::MethodDescriptor* method,
     }
     else
     {
-        // controller->SetFailed("serialize request error!");
-        std::cout<<"serialize request error!"<<std::endl;
+        controller->SetFailed("serialize request error!");
+        // std::cout<<"serialize request error!"<<std::endl;
         return;
     }
     
@@ -63,8 +63,8 @@ void MprpcChannel::CallMethod(const google::protobuf::MethodDescriptor* method,
     }
     else
     {
-        //controller->SetFailed("serialize rpc header error!");
-        std::cout<<"serialize rpc header error!"<<std::endl;
+        controller->SetFailed("serialize rpc header error!");
+        // std::cout<<"serialize rpc header error!"<<std::endl;
         return;
     }
 
