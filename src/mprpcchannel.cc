@@ -12,6 +12,10 @@
 #include "zookeeperutil.h"
 
 
+// 设置一个固定的缓存过期时间
+static const int no_cache_expiration_time = 5;
+const std::chrono::minutes CacheExpirationTime = std::chrono::minutes(no_cache_expiration_time);
+
 // 前置工具函数:生成缓存的键
 std::string getCacheKey(const std::string& service_name, const std::string& method_name)
 {
@@ -42,6 +46,9 @@ void MprpcChannel::CallMethod(const google::protobuf::MethodDescriptor* method,
     // 用来存放ip:port
     std::string host_ip_port; 
 
+    // 获取当前的时间
+    auto now_time = std::chrono::steady_clock::now();
+
     // 检查缓存是否存在
     // 防止线程间的竞争问题
     // 智能锁出作用域会自动析构
@@ -52,10 +59,20 @@ void MprpcChannel::CallMethod(const google::protobuf::MethodDescriptor* method,
         // 缓存存在，直接使用缓存建立连接
         if(it != m_serviceCache.end())
         {
-            host_ip_port = it->second;
-            // 输出缓存的信息检查
-            std::cout<<"Cache hit for key: "<< cacheKey <<", host_ip_port: "
-                    << host_ip_port <<std::endl;
+            // 检测缓存有没有过期
+            auto cache_entry = it->second;
+            // 缓存未过期
+            if(now_time - cache_entry.timeStamp < CacheExpirationTime)
+            {
+                host_ip_port = cache_entry.hostIpPort;
+                std::cout << "Cache hit for key: " << cacheKey << ", host_ip_port: " << host_ip_port << std::endl;
+            }
+            // 在规定的时间内没有访问该节点
+            // 则认为该缓存过期了 ------》删除该缓存对应的键值对
+            else{
+                std::cout << "Cache expired for key: " << cacheKey << std::endl;
+                m_serviceCache.erase(it);  // 缓存过期，删除缓存条目
+            }
         }
     }
     // 缓存未命中,要从Zookeeper上获取服务器地址
@@ -67,6 +84,10 @@ void MprpcChannel::CallMethod(const google::protobuf::MethodDescriptor* method,
         zkCli.Start();
         // 获取服务名称和服务方法
         std::string path = "/" + service_name + "/" + method_name;
+
+        // 获取watcher发生变更的节点
+        // zkCli.WatchNodeChanges(path.c_str());
+
         // 检查改服务方法下面是否有数据存在
         std::string host_data = zkCli.GetData(path.c_str());
 
@@ -97,9 +118,12 @@ void MprpcChannel::CallMethod(const google::protobuf::MethodDescriptor* method,
         {
             std::lock_guard<std::mutex> lock(m_Cache_mutex);
             // 更新缓存信息
-            m_serviceCache[cacheKey] = host_data;
+            m_serviceCache[cacheKey].hostIpPort = host_data;
+            m_serviceCache[cacheKey].timeStamp = now_time;
             // 输出缓存更新成功信息
-            std::cout << "Updated cache for key: " << cacheKey << " with host: " << host_data << std::endl;
+            std::cout << "Updated cache for key: " << cacheKey << " with host: " 
+                                                    << host_data
+                                                    << std::endl;
             // 将 host_ip_port 设置为 host_data 以供后续使用
             // host_ip_port = host_data; 
         }
@@ -108,8 +132,8 @@ void MprpcChannel::CallMethod(const google::protobuf::MethodDescriptor* method,
     // 在这里其实可以加上负载均衡的策略,这样就可以选择合适的节点进行连接
 
     // 获取当前节点的ip和port
-    // 从哈希表中直接获取
-    host_ip_port = m_serviceCache[cacheKey];
+    // 从哈希表中直接获取当前时间的ip
+    host_ip_port = m_serviceCache[cacheKey].hostIpPort;
     int index_new = host_ip_port.find(":");
     // 检查是否满足ip:port的格式
     if(index_new == -1 )
