@@ -24,6 +24,7 @@ void Logger::Log(std::string &msg)
 Logger::Logger()
 {
     // 启动专门的写日志线程
+    // [捕获列表] (参数列表) -> 返回类型 { 函数体 }
     std::thread writeLogTask(
         // [&] 捕获全部变量以引用的方式
         // 形参列表为空

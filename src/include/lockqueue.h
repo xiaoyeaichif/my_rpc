@@ -11,7 +11,7 @@ template<typename T>
 class LockQueue
 {
 public:
-    //  向队列添加元素
+    //  向队列添加元素------>主线程的操作
     void Push(const T & data)
     {
         // 先抢到锁的人先插入元素
@@ -22,7 +22,7 @@ public:
         // 由于我们只使用一个线程进行写事件，所以只需要唤醒一个写线程就可以
         m_cond_variable.notify_one();
     }
-    T Pop()
+    T Pop() // -------》后台写日志线程的操作
     {
         // 循环检测队列是否为空
         // 如果队列为空，此时不能消费队列中的元素
