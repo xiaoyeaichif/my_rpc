@@ -5,9 +5,41 @@
 
 // 全局的watcher观察器   zkserver给zkclient的通知
 // 使用信号量同步连接操作，确保客户端在与服务器建立连接后再进行其他操作。
+// void global_watcher(zhandle_t *zh, int type,
+//                    int state, const char *path, void *watcherCtx)
+// {
+// 	// 获取上下文信息
+// 	ZkClient *client = static_cast<ZkClient*>(watcherCtx);
+
+//     if (type == ZOO_SESSION_EVENT)  // 回调的消息类型是和会话相关的消息类型
+// 	{
+// 		if (state == ZOO_CONNECTED_STATE)  // zkclient和zkserver连接成功
+// 		{
+// 			sem_t *sem = (sem_t*)zoo_get_context(zh); // 获取信号量
+//             sem_post(sem); // 发送信号，解除阻塞
+// 		}
+// 	}
+// 	// 检测数据数据节点(方法名称)的变化
+// 	else if(type == ZOO_CHANGED_EVENT)
+// 	{
+// 		std::cout << "Node data changed at: " << path << std::endl;
+//         std::string data = client->GetData(path, true); // 重新获取数据并继续设置 Watcher
+//         std::cout << "New data: " << data << std::endl;
+// 	}
+// 	// 子节点(具体的IP:PORT)发生变化
+// 	else if(type == ZOO_CHILD_EVENT)
+// 	{
+// 		std::cout << "Children of node changed: " << path << std::endl;
+//         client->WatchNodeChanges(path); // 重新监控子节点变化
+// 	}
+// }
+
 void global_watcher(zhandle_t *zh, int type,
                    int state, const char *path, void *watcherCtx)
 {
+	// 获取上下文信息
+	// ZkClient *client = static_cast<ZkClient*>(watcherCtx);
+
     if (type == ZOO_SESSION_EVENT)  // 回调的消息类型是和会话相关的消息类型
 	{
 		if (state == ZOO_CONNECTED_STATE)  // zkclient和zkserver连接成功
@@ -17,6 +49,7 @@ void global_watcher(zhandle_t *zh, int type,
 		}
 	}
 }
+
 
 ZkClient::ZkClient() : m_zhandle(nullptr)
 {
@@ -97,13 +130,14 @@ void ZkClient::Create(const char *path, const char *data, int datalen, int state
 
 // 根据指定的path，获取znode节点的值
 // 一个节点最大的数据是1M
-std::string ZkClient::GetData(const char *path)
+std::string ZkClient::GetData(const char *path,bool watch)
 {
     char buffer[64];
 	int bufferlen = sizeof(buffer);
     // 同步获取与节点相关值的数据
-	int flag = zoo_get(m_zhandle, path, 0, buffer, &bufferlen, nullptr);
-    // 如果获取失败（返回值不为 ZOK），打印错误信息并返回空字符串。
+	// int flag = zoo_get(m_zhandle, path, watch ? 1: 0, buffer, &bufferlen, nullptr);
+    int flag = zoo_get(m_zhandle, path, 0, buffer, &bufferlen, nullptr);
+	// 如果获取失败（返回值不为 ZOK），打印错误信息并返回空字符串。
 	if (flag != ZOK)
 	{
 		std::cout << "get znode error... path:" << path << std::endl;
@@ -113,5 +147,58 @@ std::string ZkClient::GetData(const char *path)
 	else
 	{
 		return buffer;
+	}
+}
+
+// 获取指定路径下所有子节点的地址
+std::vector<std::string> ZkClient::GetServiceAddresses(const char *path, bool watch)
+{
+    struct String_vector children;
+    int flag = zoo_wget_children(m_zhandle, path, global_watcher, this, &children);
+
+    std::vector<std::string> addresses;
+
+    if (flag == ZOK) {
+        std::cout << "Monitoring children of node: " << path << std::endl;
+        for (int i = 0; i < children.count; ++i) {
+            // std::string child_path = std::string(path) + "/" + children.data[i];
+            // std::string child_data = GetData(child_path.c_str(), watch);
+            // if (!child_data.empty()) {
+            //     addresses.emplace_back(child_data);
+            //     std::cout << "Service instance found: " << child_data << std::endl;
+            // }
+			// 直接将子节点的名字（即 ip:port）存储到 addresses 中
+            std::string child_data = children.data[i];
+            if (!child_data.empty()) {
+                addresses.emplace_back(child_data);  // 添加 IP:Port
+                std::cout << "Service instance found: " << child_data << std::endl;
+            }
+        }
+    } else {
+        std::cout << "Failed to set watch on children of node: " << path 
+                  << ", error code: " << flag << std::endl;
+    }
+    return addresses;
+}
+
+
+
+
+// 监控子节点的变化
+void ZkClient::WatchNodeChanges(const char *path)
+{
+    struct String_vector children;
+
+	int flag = zoo_wget_children(m_zhandle, path, global_watcher, this, &children);
+
+	if (flag != ZOK)
+	{
+		std::cout << "Monitoring children of node: " << path << std::endl;
+        for (int i = 0; i < children.count; ++i) {
+            std::cout << "Child node: " << children.data[i] << std::endl;
+        }
+	}
+	else{
+		std::cout << "Failed to set watch on children of node: " << path << std::endl;
 	}
 }
